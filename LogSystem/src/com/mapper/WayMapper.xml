@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.WayMapper">
+   <resultMap id="Way" type="com.pojo.Way">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+     <association property="startStation" column="START_STATION" javaType="Station">
+			<result property="id" column="START_STATION"/>
+			<result property="stationName" column="sname"/>
+	</association>
+	<association property="endStation" column="END_STATION" javaType="Station">
+			<result property="id" column="END_STATION"/>
+			<result property="stationName" column="ename"/>
+	</association>
+	
+	<association property="startStationName" column="OUTSETSTATIONID" javaType="Station">
+    	<id property="id" column="s1id"/>
+    	<result property="stationname" column="startname"/>
+	</association>
+    <association property="endStationName" column="DESTSTATIONID" javaType="Station">
+	    	<id property="id" column="s2id"/>
+	    	<result property="stationname" column="endname"/>
+	</association>
+  </resultMap>
+
+  <select id="selectAll" parameterType="Map" resultMap="Way">
+   select w.ID,w.START_STATION,w.END_STATION,w.NAME, s.stationname sname,e.stationname ename from WAY w,station s,station e
+where w.start_station=s.id and w.end_station=e.id
+<if test="id!=null and id != '' ">
+and w.id=${id}
+</if>
+<if test="startStationname!=null and startStationname!=''">
+and s.stationname  LIKE '%'||#{startStationname}||'%'
+</if>
+<if test="endStationname!= null and endStationname!='' ">
+and e.stationname LIKE '%'||#{endStationname}||'%'
+</if>
+<if test="name!=null and name!='' ">
+and w.NAME  LIKE '%'||#{name}||'%'
+</if>
+
+order by w.ID
+    
+ </select>
+ 
+ 
+  <select id="selCount" parameterType="Map" resultType="Integer">
+		select count(*)num from ( select w.ID,w.START_STATION,w.END_STATION,w.NAME, s.stationname sname,e.stationname ename from WAY w,station s,station e
+where w.start_station=s.id and w.end_station=e.id
+<if test="id!=null and id != '' ">
+and w.id=${id}
+</if>
+<if test="startStationname!=null and startStationname !=''">
+and s.stationname  LIKE '%'||#{startStationname}||'%'
+</if>
+<if test="endStationname!= null and endStationname !='' ">
+and e.stationname LIKE '%'||#{endStationname}||'%'
+</if>
+<if test="name!=null and name!='' ">
+and w.NAME  LIKE '%'||#{name}||'%'
+</if>
+
+order by w.ID) 
+	</select>
+  <select id="add" parameterType="Way">
+     	insert into way(id,START_STATION,END_STATION,NAME) 
+     	values(WAY_SEQ.NEXTVAL,#{startStation.id},#{endStation.id},#{name})
+     </select>
+     
+	<select id="update" parameterType="Way">
+     	update way set START_STATION=#{startStation.id},END_STATION=#{endStation.id},NAME=#{name}where id=#{id}     
+	</select>
+     
+	<select id="del" parameterType="String">
+     	delete from way where id=#{id}
+	</select>
+	<select id="selOne" parameterType="String" resultMap="Way">
+     	select w.ID,w.START_STATION,w.END_STATION,w.NAME from way w where id=#{id}
+     </select>
+     
+     <select id="selAllList"  resultMap="Way">
+		select * from way
+	</select>
+	
+	
+	<select id="selOneWay" parameterType="String" resultMap="Way">
+     	select w.START_STATION,w.END_STATION,s1.id s1id,s1.stationname startname,s2.id s2id,s2.stationname endname from WAY w
+		inner join station s1 on w.START_STATION=s1.id
+		inner join station s2 on w.END_STATION=s2.id
+		where w.id=#{id}
+     </select>
+</mapper>

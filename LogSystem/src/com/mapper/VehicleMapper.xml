@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+    
+
+    
+<mapper namespace="com.mapper.VehicleMapper">  
+
+	<resultMap id="result-vehicle-map" type="Vehicle" >
+		<id property="id" column="id"/>
+		<result property="vehiclelicense" column="vehiclelicense"/>
+		<result property="vehicleload" column="vehicleload"/>
+		<result property="vehiclecapacity" column="vehiclecapacity"/>
+	</resultMap>
+
+	<select id="selList" resultType="Vehicle">
+		select * from vehicle	order by ID
+	</select>
+	
+	  <select id="selCount" parameterType="Vehicle" resultType="Integer">
+     	select count(*) num from vehicle
+     	WHERE 1 = 1
+        <if test="VEHICLELICENSE != null and VEHICLELICENSE !=''">
+        AND VEHICLELICENSE = #{vehicleLicense}
+       </if>
+     </select>
+
+     
+     <select id="add" parameterType="Vehicle">
+     	insert into vehicle(ID,VEHICLELICENSE,VEHICLELOAD,VEHICLECAPACITY) 
+     	values(vehicle_seq.nextval,#{vehicleLicense},#{vehicleLoad},#{vehicleCapacity})
+     </select>
+     
+     
+     <select id="del" parameterType="Vehicle">
+     	delete from vehicle where id=#{id}
+     </select>
+     
+       <select id="update" parameterType="Vehicle">
+     	update vehicle set VEHICLELICENSE=#{vehicleLicense},VEHICLELOAD=#{vehicleLoad},VEHICLECAPACITY=#{vehicleCapacity} where id=#{id}     
+     </select>
+     
+    <select id="selAll" parameterType="Vehicle"  resultType="Vehicle">
+		select * from vehicle
+	</select>
+  	  
+</mapper>

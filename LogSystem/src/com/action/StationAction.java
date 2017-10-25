@@ -1,0 +1,116 @@
+package com.action;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.ServletActionContext;
+import org.springframework.stereotype.Controller;
+
+import com.opensymphony.xwork2.ActionSupport;
+import com.pojo.Station;
+import com.pojo.UserInfo;
+import com.service.StationService;
+import com.sun.mail.iap.Response;
+
+@Controller
+public class StationAction extends PageAction{
+
+	private Station station;
+	
+	@Resource
+	private StationService stationService;
+
+
+	public Station getStation() {
+		return station;
+	}
+	public void setStation(Station station) {
+		this.station = station;
+	}
+	public String list(){
+		//获取list 线路信息
+		this.init(stationService.selCount());
+		List<Station> list=stationService.selList(this.getCurPage());
+		HttpServletRequest req = ServletActionContext.getRequest();
+		System.out.println(list.size());
+
+		System.out.println(list);
+
+		req.setAttribute("list", list);
+		return "list";
+	}
+	public String getStationList() throws IOException{
+		
+		//ajax
+		List<Station> list=stationService.getStation();
+		System.out.println("++++++++++++++++++++"+list);
+		HttpServletResponse resp = ServletActionContext.getResponse();
+		HttpServletRequest req = ServletActionContext.getRequest();
+		req.setCharacterEncoding("utf-8");  
+        resp.setContentType("text/html;charset=utf-8");
+        resp.setHeader("Cache-Control", "no-cache"); 
+        PrintWriter out = resp.getWriter();
+		if(list!=null){
+			for(int i=0;i<list.size();i++){
+				Station station=list.get(i);
+				out.print(station.getStationName()+"%"+station.getId()+" ");
+				
+			}
+		}
+		out.flush();
+		out.close();
+		return "success";
+		
+	}
+public String getWDStation() throws IOException{
+		
+		//ajax
+		HttpServletRequest req = ServletActionContext.getRequest();
+		String id=req.getParameter("id");
+		List<Station> list=stationService.getWDStation(id);
+		System.out.println("++++++++++++++++++++"+list);
+		HttpServletResponse resp = ServletActionContext.getResponse();
+		req.setCharacterEncoding("utf-8");  
+        resp.setContentType("text/html;charset=utf-8");
+        resp.setHeader("Cache-Control", "no-cache"); 
+        PrintWriter out = resp.getWriter();
+		if(list!=null){
+			for(int i=0;i<list.size();i++){
+				Station station=list.get(i);
+				out.print(station.getStationName()+"%"+station.getId()+" ");
+				
+			}
+		}
+		out.flush();
+		out.close();
+		return "success0";
+		
+	}
+	public String add(){
+		System.out.println(station.toString());
+		stationService.add(station);
+		System.out.println(station.toString());
+		station=null;
+		return list();
+	}
+	public String del(){
+		System.out.println("DELid:"+station.getId());
+		stationService.del(station);
+		System.out.println("DELid:"+station.getId());
+		station=null;
+		return list();
+	}
+	/**
+	 * 显示List
+	 * @return
+	 */
+	public String update(){
+		stationService.update(station);
+		return list();
+	}
+}

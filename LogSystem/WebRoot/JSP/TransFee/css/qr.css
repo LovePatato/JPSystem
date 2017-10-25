@@ -1,0 +1,51 @@
+#qr_wx_id{
+	position: absolute;
+	width: 64px;
+	height: 64px;
+    bottom: 136px;
+    right: 20px;
+	margin: 0;
+	border: 0;
+	background-image: url(../images/qr-wx.png);
+}
+
+#qr_wx_id:hover{
+	background-image: url(../images/qr-wx-hover.png);
+}
+
+#qr_wx_over_show_id{
+	position: absolute;
+	width: 125px;
+	height: 125px;
+    bottom: 100px;
+    right: 84px;
+	margin: 0;
+	border: 0;
+	background-image: url(../images/wx.png);
+}
+
+#qr_qq_id{
+	position: absolute;
+	width: 64px;
+	height: 64px;
+    bottom: 72px;
+    right: 20px;
+	margin: 0;
+	border: 0;
+	background-image: url(../images/qr-qq.png);
+}
+
+#qr_qq_id:hover{
+	background-image: url(../images/qr-qq-hover.png);
+}
+
+#qr_qq_over_show_id{
+	position: absolute;
+	width: 125px;
+	height: 125px;
+    bottom: 36px;
+    right: 84px;
+	margin: 0;
+	border: 0;
+	background-image: url(../images/wx.png);
+}

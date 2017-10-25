@@ -1,0 +1,8 @@
+eclipse.preferences.version=1
+encoding//WebRoot/JSP/Bill/Billpage.jsp=UTF-8
+encoding//WebRoot/JSP/User/js/script.js=UTF-8
+encoding//WebRoot/login.jsp=UTF-8
+encoding//src/com/action/LoginAction.java=UTF-8
+encoding//src/com/action/OrdersAction.java=UTF-8
+encoding//src/com/action/StationAction.java=UTF-8
+encoding//src/com/service/OrdersServiceImpl.java=UTF-8

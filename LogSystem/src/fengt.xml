@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+	
+
+    <package name="fengt"  extends="struts-default">
+
+		<action name="ordersAction!*" method="{1}" class="ordersAction">
+			<result name="list">/JSP/Bill/order.jsp</result>
+			
+			
+			<result name="add" type="redirectAction"> 
+    			<param name="actionName">ordersAction!list</param>
+			</result>
+			
+							
+			<result name="update">/JSP/Bill/orders_update.jsp</result>
+			
+		</action>
+     </package>
+
+</struts>

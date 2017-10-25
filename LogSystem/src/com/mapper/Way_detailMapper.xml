@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.Way_detailMapper">
+  <resultMap id="WDresult" type="Way_detail">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="SORT_ID" jdbcType="DECIMAL" property="sortId" />
+     <association property="way" column="way_id" javaType="Way">
+			<result property="id" column="way_id"/>
+			<result property="name" column="name"/>
+	</association>
+	<association property="station" column="station_id" javaType="Station">
+			<result property="id" column="station_id"/>
+			<result property="stationName" column="stationname"/>
+	</association>
+  </resultMap>
+  <resultMap id="WD" type="Way_detail">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="SORT_ID" jdbcType="DECIMAL" property="sortId" />
+     <association property="way" column="way_id" javaType="Way">
+			<result property="id" column="way_id"/>
+	</association>
+	<association property="station" column="station_id" javaType="Station">
+			<result property="id" column="station_id"/>
+	</association>
+  </resultMap>
+
+   <select id="selectByWay_Id" parameterType="String" resultMap="WDresult">
+     	select d.ID,d.way_id,d.station_id,d.SORT_ID,w.name,s.stationname from Way_detail d,Way w,station s 
+     	where d.way_id=#{id} and w.id=d.way_id and s.id=d.station_id order by d.SORT_ID,d.ID
+     </select>
+     <select id="add" parameterType="Way_detail">
+     	insert into Way_detail(ID,way_id,station_id,SORT_ID) 
+     	values(WAY_DETAIL_SEQ.NEXTVAL,#{way.id},#{station.id},WAY_DETAIL_SORT_SEQ.NEXTVAL)
+     </select>
+     <select id="del" parameterType="String">
+     	delete from Way_detail where id=#{id}
+	</select>
+	<select id="update" parameterType="Way_detail">
+     	update Way_detail set way_id=#{way.id},station_id=#{station.id},SORT_ID=#{sortId}where id=#{id}     
+	</select>
+	<select id="selUP" parameterType="Way_detail" resultMap="WD">
+		select * from 
+     	(select * from Way_detail 
+     	where way_id=#{way.id}and 
+     	(sort_id <![CDATA[<]]> #{sortId} or sort_id=(SELECT MIN(sort_id) from Way_detail ) )
+     	order by sort_id desc)
+		where rownum<![CDATA[<]]>=1
+     </select>
+     <select id="selDown" parameterType="Way_detail" resultMap="WD">
+		select * from 
+     	(select * from Way_detail 
+     	where way_id=#{way.id}and 
+     	(sort_id <![CDATA[>]]> #{sortId} or sort_id=(SELECT MAX(sort_id) from Way_detail ) )
+     	order by sort_id asc)
+		where rownum<![CDATA[<]]>=1
+     </select>
+	
+  
+</mapper>

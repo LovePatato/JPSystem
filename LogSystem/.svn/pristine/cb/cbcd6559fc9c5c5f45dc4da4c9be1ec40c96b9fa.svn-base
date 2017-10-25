@@ -1,0 +1,102 @@
+package com.action;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.ServletActionContext;
+import org.springframework.stereotype.Controller;
+
+import com.opensymphony.xwork2.ActionSupport;
+import com.pojo.Station;
+import com.pojo.UserInfo;
+import com.service.UserInfoService;
+
+@Controller
+//@controller 鎺у埗鍣紙娉ㄥ叆鏈嶅姟锛�
+public class LoginAction extends PageAction{
+
+	private UserInfo userInfo;
+	
+	@Resource
+	private UserInfoService userInfoService;
+	
+	/**
+	 * 鐧诲綍
+	 * @return
+	 */
+	public String login(){
+		
+		//閫氳繃涓婁笅鏂囧璞″彇request
+		HttpServletRequest req = ServletActionContext.getRequest();
+		//UserInfoDao ud = new UserInfoDao();
+		if(userInfoService.login(userInfo)){//鐧诲綍鎴愬姛
+			
+			HttpSession session = req.getSession();
+			session.setAttribute("user", userInfo);
+			return "main";
+		}
+		this.addActionMessage("鐢ㄦ埛鍚嶆垨瀵嗙爜閿欒");
+		return list();
+	}
+	
+	/**
+	 * 閫�嚭鐧诲綍
+	 * @return
+	 */
+	public String logOut(){
+		HttpServletRequest req = ServletActionContext.getRequest();
+		req.getSession().removeAttribute("user");
+		return "login";
+	}
+
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+	public String register(){
+		userInfoService.add(userInfo);
+		return list();
+	}
+	public String del(){
+		userInfoService.del(userInfo);
+		return list();
+	}
+	public String update(){
+		userInfoService.update(userInfo);
+		return list();
+	}
+	public String list(){
+		this.init(userInfoService.selCount());
+		List<UserInfo> list=userInfoService.selList(this.getCurPage());
+		HttpServletRequest req = ServletActionContext.getRequest();
+		System.out.println(list.size());
+		//閹跺ist閺�儳鍙唕equest閹崵鏁ら崺锟�
+		req.setAttribute("list", list);
+		return "list";
+	}
+	
+/*	public String list(){
+		
+		
+		this.init(billService.getTotalCount(bill));
+		
+		
+		//璋冪敤dao鍙朙ist
+		List<Bill> list = billService.getAllBill(bill,this.getCurPage());
+		HttpServletRequest req = ServletActionContext.getRequest();
+		//鎶妉ist鏀惧叆request鎬荤敤鍩�
+		req.setAttribute("list", list);
+		
+		return "list";
+	}*/
+	
+	
+	
+	
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+    
+
+    
+<mapper namespace="com.mapper.GoodsMapper">  
+
+	<resultMap id="result-goods-map" type="Goods" >
+		<id property="ID" jdbcType="DECIMAL" column="id"/>
+		<result property="goodstypesname" jdbcType="VARCHAR" column="GOODSTYPENAME"/>
+		<result property="remark" jdbcType="VARCHAR" column="REMARK"/>
+		
+		
+	</resultMap>
+
+	<select id="selList"  resultType="Goods">
+		select * from GOODSTYPE order by id
+	</select>
+	<select id="selCount"  resultType="Integer">
+		select count(*) num from GOODSTYPE
+	</select>
+	 <insert id="add" parameterType="Goods">
+     	insert into GOODSTYPE(ID,GOODSTYPENAME,REMARK) 
+     	values(goods_seq.nextval,#{goodsTypeName},#{remark})
+     </insert>
+     <select id="del" parameterType="Goods">
+     	delete from GOODSTYPE where id=#{id}
+     </select>
+     <select id="update" parameterType="Goods">
+     	update GOODSTYPE set GOODSTYPENAME=#{goodsTypeName},REMARK=#{remark} where id=#{id}     
+     </select>
+
+    <select id="selAll" parameterType="Goods" resultType="Goods">
+		select * from GOODSTYPE
+	</select> 
+     
+  	  
+</mapper>

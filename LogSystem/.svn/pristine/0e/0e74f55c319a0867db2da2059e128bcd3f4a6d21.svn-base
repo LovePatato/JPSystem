@@ -1,0 +1,12 @@
+#goTopBtn {
+	position: fixed; 
+	text-align: center;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	bottom: 5px;
+	cursor: pointer;
+	right: 0px;
+    _position: absolute;
+	_right: auto;
+}

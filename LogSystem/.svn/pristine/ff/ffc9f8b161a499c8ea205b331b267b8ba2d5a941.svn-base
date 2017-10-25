@@ -1,0 +1,87 @@
+.transTable{
+
+    width:900px;
+    font-size:13px;
+    border:1px solid #000;
+    text-align: center;
+}
+
+.transTable tr{
+
+    border:1px solid #000;
+}
+
+.transTable tr td{
+
+    border:1px solid #000;
+}
+
+.boxSet{
+
+
+}
+
+.btnTop { position: fixed; right: 2%; bottom: 2%; cursor: pointer; opacity: .7; z-index: 9; }
+.btnTop:hover { opacity: 1;}
+.imageTop { height: 72px;}
+
+.up{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    width:10px;
+    display:none;
+}
+
+#h_style
+{
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid #eee;
+}
+
+#item1
+{
+    background-image: url(../images/item1.png);
+    background-repeat: no-repeat;
+    width:100px;
+    height:26px;
+    background-color:#fff;
+}
+
+.item
+{
+    background-repeat: no-repeat;
+    width:100px;
+    height:26px;
+    margin-left: -5px;
+    background-color:#fff;
+}
+
+.feeTable{
+    width:600px;
+    height:200px;
+    border:1px solid #000;
+    font-size:11px;
+}
+
+.feeTable tr td{
+    width:120px;
+    border:1px solid #000;
+}
+
+.feeStyle{
+    background-color: #E8E8E8;
+    width:100px;
+}
+
+.fon_s
+{
+	color: rgb(56,163,213);
+}
+
+#second{
+	display:none;
+}
+
+

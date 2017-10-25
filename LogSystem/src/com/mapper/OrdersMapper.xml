@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.OrdersMapper">
+	<resultMap id="result-orders-map" type="com.pojo.Orders">
+		<id column="ID" jdbcType="DECIMAL" property="id" />
+		<result column="OUTSETSTATIONID" jdbcType="DECIMAL" property="outsetstationid" />
+    	<result column="DESTSTATIONID" jdbcType="DECIMAL" property="deststationid" />
+    	<result column="ORDERSTATUS" jdbcType="VARCHAR" property="orderstatus" />
+		<result column="VEHICLEID" jdbcType="DECIMAL" property="vehicleid" />
+		<result column="RECEIVEDATA" jdbcType="TIMESTAMP" property="receivedata" />
+		<result column="GOODSNAME" jdbcType="VARCHAR" property="goodsname" />
+		<result column="GOODSNUMBER" jdbcType="DECIMAL" property="goodsnumber" />
+		<result column="GOODSTYPEID" jdbcType="DECIMAL" property="goodstypeid" />
+		<result column="GOODSTOTALWEIGHT" jdbcType="DECIMAL" property="goodstotalweight" />
+		<result column="GOODSTOTALVOLUME" jdbcType="DECIMAL" property="goodstotalvolume" />
+		<result column="TOTALFARE" jdbcType="DECIMAL" property="totalfare" />
+		<result column="SENDERNAME" jdbcType="VARCHAR" property="sendername" />
+		<result column="SENDERMOBILEPHONE" jdbcType="VARCHAR" property="sendermobilephone" />
+		<result column="SENDERADDRESS" jdbcType="VARCHAR" property="senderaddress" />
+		<result column="SENDERZIPCODE" jdbcType="VARCHAR" property="senderzipcode" />
+		<result column="ADDRESSEENAME" jdbcType="VARCHAR" property="addresseename" />
+		<result column="ADDRESSEEMOBILEPHONE" jdbcType="VARCHAR"
+			property="addresseemobilephone" />
+		<result column="ADDRESSEEADDRESS" jdbcType="VARCHAR" property="addresseeaddress" />
+		<result column="ADDRESSEEZIPCODE" jdbcType="VARCHAR" property="addresseezipcode" />
+		<result column="REMARK" jdbcType="VARCHAR" property="remark" />
+		<result column="WAY_ID" jdbcType="VARCHAR" property="way_id" />
+		
+		<!--关联Station表  -->
+		<!-- <association property="Station" column="OUTSETSTATIONID" javaType="com.pojo.Station">
+			<result property="id" column="stationId"/> 
+			<id property="id" column="sid"/>
+			<result property="stationName" column="stationname"/>		
+		</association>
+		
+		<association property="Station" column="DESTSTATIONID" javaType="com.pojo.Station">
+			<result property="id" column="stationId"/> 
+			<id property="id" column="sid"/>
+			<result property="stationName" column="STATIONNAME"/>		
+		</association> -->
+		
+		<!-- 关联way表 -->
+		<!-- <association property="Way" column="WAY_ID" javaType="com.pojo.Way">
+			<id property="id" column="wid"/>
+			<result property="startStation" column="START_STATION"/>
+			<result property="endStation" column="END_STATION"/>
+			<result property="name" column="NAME"/>
+		</association> -->
+		
+		<!-- 关联Goods -->
+		<!-- <association property="Goods" column="GOODSNAME" javaType="com.pojo.Goods">
+			<result property="id" column="stationId"/> 
+			<id property="id" column="gid"/>
+			<result property="goodsname" column="GOODSTYPENAME"/>		
+		</association> -->
+		
+		<!-- 关联Vehicle -->
+		<!-- <association property="Vehicle" column="VEHICLEID" javaType="com.pojo.Vehicle">
+			<result property="id" column="stationId"/> 
+			<id property="id" column="vid"/>
+			<result property="vehicleLicense" column="VEHICLELICENSE"/>		
+		</association> -->
+	</resultMap>
+
+
+	<insert id="add" parameterType="com.pojo.Orders">
+		insert into orders (ID, OUTSETSTATIONID, DESTSTATIONID, 
+      ORDERSTATUS, VEHICLEID, RECEIVEDATA, 
+      GOODSNAME, GOODSNUMBER, GOODSTYPEID, 
+      GOODSTOTALWEIGHT, GOODSTOTALVOLUME, TOTALFARE, 
+      SENDERNAME, SENDERMOBILEPHONE, SENDERADDRESS, 
+      SENDERZIPCODE, ADDRESSEENAME, ADDRESSEEMOBILEPHONE, 
+      ADDRESSEEADDRESS, ADDRESSEEZIPCODE, REMARK, 
+      WAY_ID)
+    values (OD.NEXTVAL, #{outsetstationid,jdbcType=DECIMAL}, #{deststationid,jdbcType=DECIMAL}, 
+      #{orderstatus,jdbcType=VARCHAR}, #{vehicleid,jdbcType=DECIMAL}, sysdate, 
+      #{goodsname,jdbcType=VARCHAR}, #{goodsnumber,jdbcType=DECIMAL}, #{goodstypeid,jdbcType=DECIMAL}, 
+      #{goodstotalweight,jdbcType=DECIMAL}, #{goodstotalvolume,jdbcType=DECIMAL}, #{totalfare,jdbcType=DECIMAL}, 
+      #{sendername,jdbcType=VARCHAR}, #{sendermobilephone,jdbcType=VARCHAR}, #{senderaddress,jdbcType=VARCHAR}, 
+      #{senderzipcode,jdbcType=VARCHAR}, #{addresseename,jdbcType=VARCHAR}, #{addresseemobilephone,jdbcType=VARCHAR}, 
+      #{addresseeaddress,jdbcType=VARCHAR}, #{addresseezipcode,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{way_id,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="selList" parameterType="Map" resultMap="result-orders-map">
+		<!-- select id,outsetstationid,RECEIVEDATA,ORDERSTATUS,GOODSNAME,GOODSNUMBER,TOTALFARE,SENDERNAME,SENDERMOBILEPHONE,ADDRESSEENAME
+		,ADDRESSEEMOBILEPHONE,ADDRESSEEADDRESS,ADDRESSEEZIPCODE,WAY_ID
+		from orders -->
+		select o.id,o.outsetstationid,o.orderstatus,o.deststationid,o.vehicleid,o.goodstypeid,o.receivedata,o.goodsname,
+		o.goodsnumber,o.goodstotalweight,o.goodstotalvolume,o.totalfare,o.sendername,o.sendermobilephone,o.senderaddress,
+		o.senderzipcode,o.addresseename,o.addresseemobilephone,o.addresseeaddress,o.senderzipcode,o.addresseename,
+		o.remark,o.WAY_ID
+		from orders o
+		
+	</select>
+	
+	<!-- 分页查找 -->
+	<select id="selLists" parameterType="Map" resultMap="result-orders-map">
+		 <!-- select * from orders order by id  -->
+		select o.id,o.outsetstationid,o.deststationid,o.orderstatus,o.vehicleid,o.receivedata,o.goodsname,o.goodstypeid,o.totalfare,o.sendername,o.senderaddress,
+		o.addresseename,o.addresseeaddress,o.remark from orders o
+		<where>
+			<if test="orderstatus!=null and orderstatus!=''">o.ORDERSTATUS=#{orderstatus}</if>
+	
+			<if test="receivedata!=null and receivedata!=''">and o.receivedata>=TO_DATE(#{receivedata},'YYYY-MM-DD') 
+			 and o.receivedata&lt;TO_DATE(#{receivedata1},'YYYY-MM-DD')</if>
+		</where>
+	</select>
+	
+	
+	<!-- 根据id查一条的所有信息 -->
+	<select id="selOne" parameterType="String" resultMap="result-orders-map">
+		select * from orders where id=#{id}
+	</select>
+	
+	<!-- 查询总记录数 -->
+	<select id="selCount"  resultType="Integer">
+		select count(*) num from orders o
+		
+	</select>
+	
+	<!-- 删除 -->
+	<select id="del" parameterType="String">
+		delete from orders where id=#{id}
+	</select>
+	
+	<select id="update" parameterType="com.pojo.Orders">
+		update orders set outsetstationid=#{outsetstationid},deststationid=#{deststationid},receivedata=to_date(#{receivedata},'yyyy-mm-dd hh24:mi:ss'),
+		vehicleid=#{vehicleid},goodstypeid=#{goodstypeid},goodsname=#{goodsname},goodsnumber=#{goodsnumber},
+		goodstotalweight=#{goodstotalweight},goodstotalvolume=#{goodstotalvolume},totalfare=#{totalfare},sendername=#{sendername},
+		sendermobilephone=#{sendermobilephone},senderaddress=#{senderaddress},senderzipcode=#{senderzipcode},addresseename=#{addresseename},
+		addresseemobilephone=#{addresseemobilephone},addresseeaddress=#{addresseeaddress},addresseezipcode=#{addresseezipcode},
+		remark=#{remark},WAY_ID=#{way_id} where id=#{id}
+	</select>
+	
+	<!-- <select id="selIndex" parameterType="String" resultMap="result-orders-map">   hh24:mi:ss
+		select o.id,o.outsetstationid,o.deststationid,o.receivedate,o.vehicleid,o.goodstypeid,o.receivedata,o.goodsname,
+		o.goodsnumber,o.goodstotalweight,o.goodstotalvolume,o.totalfare,o.sendername,o.sendermobilephone,o.senderaddress,
+		o.senderzipcode,o.addresseename,o.addresseemobilephone,o.addresseeaddress,o.senderzipcode,o.addresseename,
+		o.remark,o.WAY_ID ,
+		w.id,w.startStation,w.endStation,w.name ,
+		v.id,v.vehicleLicense,v.vehicleLoad,v.vehicleCapacity,
+		inner join orders o on o.outsetstationid = w.id
+		inner join way w on o.deststationid = w.id
+		inner join vehicle v on o.vehicleid = v.id
+	</select> -->
+</mapper>   

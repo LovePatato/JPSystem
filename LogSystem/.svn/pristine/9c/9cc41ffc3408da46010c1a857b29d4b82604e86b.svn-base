@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+	
+
+    <package name="st"  extends="struts-default">
+
+		
+		<action name="vehicleAction!*" method="{1}" class="vehicleAction">
+			<result name="list">/JSP/Vehicle/vehicle_sel.jsp</result>
+		</action>
+		
+		
+		<action name="goodsAction!*" method="{1}" class="goodsAction">
+			<result name="list">/JSP/goods/goodsType.jsp</result>
+		</action>
+	
+		
+     </package>
+
+</struts>

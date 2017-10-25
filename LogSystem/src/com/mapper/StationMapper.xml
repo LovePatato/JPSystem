@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+    
+
+    
+<mapper namespace="com.mapper.StationMapper">  
+
+	<resultMap id="Station" type="com.pojo.Station" >
+		<id property="id" jdbcType="DECIMAL" column="ID"/>
+		<result property="stationName" jdbcType="VARCHAR" column="STATIONNAME"/>
+		<result property="stationPhone" jdbcType="VARCHAR" column="STATIONPHONE"/>
+		<result property="stationAddress" jdbcType="VARCHAR" column="STATIONADDRESS"/>
+		
+	</resultMap>
+
+	<select id="selList"  resultType="Station">
+		select * from station order by id
+	</select>
+	
+	
+	<select id="selCount"  resultType="Integer">
+		select count(*) num from station 
+	</select>
+	 <insert id="add" parameterType="Station">
+     	insert into station(ID, STATIONNAME, STATIONPHONE, STATIONADDRESS) 
+     	values(ST.nextval,#{stationName},#{stationPhone},#{stationAddress})
+     </insert>
+     <select id="del" parameterType="Station">
+     	delete from station where id=#{id}
+     </select>
+     <select id="update" parameterType="Station">
+     	update Station set STATIONNAME=#{stationName},STATIONADDRESS=#{stationAddress},STATIONPHONE=#{stationPhone} where id=#{id}     
+     </select>
+
+	<select id="selAllList"  resultMap="Station">
+		select * from station order by id
+	</select>
+	<select id="getWDList" parameterType="String" resultMap="Station">
+     	SELECT * FROM station where id not in(
+ 	select station_id from way_detail where way_id=#{id}
+	union 
+	select start_station from way w where id=#{id}
+	union 
+	select end_station from way w where id=#{id}
+	)
+	order by id
+     	     
+     </select>
+        
+  
+  	  
+</mapper>

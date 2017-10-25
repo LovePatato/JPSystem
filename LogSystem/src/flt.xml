@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+	
+
+    <package name="flt"  extends="struts-default">
+
+	
+		<action name="wayAction!*" method="{1}" class="wayAction">
+			<result name="list">/JSP/Way/way.jsp</result>
+			<result name="add" type="redirectAction"> 
+    			<param name="actionName">wayAction!list</param>
+				</result>
+			<result name="del" type="redirectAction"> 
+    			<param name="actionName">wayAction!list</param>
+				</result>
+			<result name="update" type="redirectAction"> 
+    			<param name="actionName">wayAction!list</param>
+				</result>		
+				
+		</action>
+		<action name="way_detailAction!*" method="{1}" class="way_detailAction">
+			<result name="list">/JSP/Way/way_detail.jsp</result>
+			<result name="add" type="redirectAction"> 
+    			<param name="actionName">way_detailAction!list</param>
+    			<param name="way.id">${way.id}</param>
+				</result>
+			<result name="del" type="redirectAction"> 
+    			<param name="actionName">way_detailAction!list</param>
+    			<param name="way.id">${way.id}</param>
+				</result>
+			<result name="update" type="redirectAction"> 
+    			<param name="actionName">way_detailAction!list</param>
+    			<param name="way.id">${way.id}</param>
+				</result>
+		</action>
+		
+     </package>
+
+</struts>

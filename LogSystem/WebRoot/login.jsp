@@ -1,0 +1,58 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+
+<link rel="stylesheet" href="css/bootstrap.css" />
+<link rel="stylesheet" href="css/login.css"> 
+<script type="text/javascript" src="js/jquery-3.0.0.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<div class="tit">
+		<span><font color="red">高校后勤维修管理系统</font></span>
+	</div>
+	<div class="login-wrap">
+		<form method="post" action="loginAction!login">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td height="25" valign="bottom">用户名：</td>
+				</tr>
+				<tr>
+					<td><input type="text" class="login_input login_user"
+						name="userInfo.username" />
+					</td>
+				</tr>
+				<tr>
+					<td height="35" valign="bottom">密 码：</td>
+				</tr>
+				<tr>
+					<td><input type="password" class="login_input login_password"
+					 name="userInfo.password" />
+					</td>
+				</tr>
+				<tr>
+					<td height="60" valign="bottom">
+					<input type="submit" name="submit" value="登录系统" class="btn btn-block btn-login">
+					</td>
+				</tr>
+				<tr><!--  -->
+					<td>
+						<a href="<%=request.getContextPath() %>/JSP/User/register.jsp"  class="register">没有账号请注册</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div class="copyright">建议使用IE8以上版本或谷歌浏览器</div>
+</body>
+</html>
